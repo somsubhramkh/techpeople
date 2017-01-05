@@ -23,6 +23,10 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="E:/Somsubhra/Expert Faculty/Software/ojdbc6-11.1.0.7.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/Somsubhra/Expert Faculty/Software/ojdbc6-11.1.0.7.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

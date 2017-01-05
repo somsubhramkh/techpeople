@@ -1,0 +1,5 @@
+com\niit\angularauth\backend\App.class
+com\niit\angularauth\backend\config\AppContextConfig.class
+com\niit\angularauth\backend\dao\UserDAO.class
+com\niit\angularauth\backend\dao\UserDAOImpl.class
+com\niit\angularauth\backend\model\User.class

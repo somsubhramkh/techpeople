@@ -8,9 +8,6 @@
         <dependent-module archiveName="angularauth-backend-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/angularauth-backend/angularauth-backend">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="ojdbc6-11.1.0.7.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/E:/Somsubhra/Expert Faculty/Software/ojdbc6-11.1.0.7.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="context-root" value="angularauth-rest"/>
         <property name="java-output-path" value="/angularauth-rest/target/classes"/>
     </wb-module>
