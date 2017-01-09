@@ -1,0 +1,13 @@
+<div  class="container">
+
+
+Welcome to Blogs
+
+
+<div ng-repeat="blog in vm.allBlogs">
+ <a href = "#"  ng-click="vm.getBlog(blog.blogId)"> Title  {{blog.title}} -  Written By:  {{blog.user.userID}}</a>  
+
+</div>
+
+
+</div>

@@ -45,7 +45,7 @@
         }
 
         function ClearCredentials() {
-            $rootScope.globals = {};
+            $rootScope.currentUser = {};
             $cookies.remove('currentUser');
             $http.defaults.headers.common.Authorization = 'Basic';
         }

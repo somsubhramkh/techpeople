@@ -27,7 +27,7 @@
         }
 
         function GetByUsername(username) {
-            return $http.get('http://localhost:10080/angularauth-rest/user/' + username).then(handleSuccess, handleError('Error getting user by username'));
+            return $http.get('http://localhost:10080/angularauth-rest/user/username/' + username).then(handleSuccess, handleError('Error getting user by username'));
         }
 
         function Create(user) {
