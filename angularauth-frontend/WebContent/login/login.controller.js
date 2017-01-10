@@ -24,7 +24,9 @@
                 if (response.success) {
                 	console.log(vm.username+'  '+vm.password);
                     AuthenticationService.SetCredentials(vm.username, vm.password);
+                    console.log('5');
                     $location.path('/');
+                    console.log('6');
                 } else {
                     FlashService.Error(response.message);
                     vm.dataLoading = false;

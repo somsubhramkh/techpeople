@@ -121,17 +121,18 @@ public class UserRestController {
 	  //-------------------Authenticate a User--------------------------------------------------------
 	    
 	  	@PostMapping(value = "/user/authenticate")
-	      public ResponseEntity<Void> authenticate(@RequestBody User user) {
+	      public ResponseEntity<User> authenticate(@RequestBody User user) {
 	          
 	    
 	          if (userDAO.authenticate(user.getUsername(),user.getPassword())) {
-	              return new ResponseEntity<Void>(HttpStatus.OK);
+	        	  User u=userDAO.getUserByUsername(user.getUsername());
+	              return new ResponseEntity<User>(u,HttpStatus.OK);
 	          }
 	    
 	       
 	    
 	         
-	          return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+	          return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	      }
 		
 }

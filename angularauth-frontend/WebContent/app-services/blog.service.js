@@ -82,7 +82,7 @@
             return $http.get  (BASE_URL+'/blog/'+id)
                     .then(
                             function(response){
-                            	$rootScope.selectedBlog = response.data
+                            	$rootScope.selectedBlog = response.data;
                                 return response.data;
                             }, 
                             function(errResponse){

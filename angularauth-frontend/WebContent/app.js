@@ -35,8 +35,8 @@ console.log('inside app.js')
 		    })
 
 		    .when('/listblog', {
-		    	controller : 'BlogController',
 		    	templateUrl : 'blog/listblog.view.html',
+		    	controller : 'BlogController',
 		    	controllerAs: 'vm'
 		    })
 
@@ -53,8 +53,9 @@ console.log('inside app.js')
     function run($rootScope, $location, $cookies, $http) {
         // keep user logged in after page refresh
         $rootScope.currentUser = $cookies.getObject('currentUser') || {};
+        console.log('7'+$rootScope.currentUser.username);
         if ($rootScope.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.currentUser;
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.currentUser.username;
         }
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {

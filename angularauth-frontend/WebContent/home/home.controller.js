@@ -8,7 +8,7 @@
     HomeController.$inject = ['UserService', '$rootScope'];
     function HomeController(UserService, $rootScope) {
         var vm = this;
-
+        console.log('username in HomeController:'+$rootScope.currentUser);
         vm.user = null;
         vm.allUsers = [];
         vm.deleteUser = deleteUser;
@@ -21,6 +21,7 @@
         }
 
         function loadCurrentUser() {
+        	console.log('inside loadCurrentUser function:'+$rootScope.currentUser.username)
             UserService.GetByUsername($rootScope.currentUser.username)
                 .then(function (user) {
                     vm.user = user;
