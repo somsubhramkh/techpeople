@@ -50,7 +50,19 @@ console.log('inside app.js')
 		    	templateUrl : 'job/postjob.view.html',
 		    	controller : 'JobController',
 		    	controllerAs: 'vm'
-	})
+		    })
+		    
+		    .when('/searchjob', {
+		    	templateUrl : 'job/searchjob.view.html',
+		    	controller : 'JobController',
+		    	controllerAs: 'vm'
+		    })
+		    
+		    .when('/jobdetails', {
+		    	templateUrl : 'job/jobdetails.view.html',
+		    	controller : 'JobController',
+		    	controllerAs: 'vm'
+		    })
 
             .otherwise({ redirectTo: '/login' });
     }

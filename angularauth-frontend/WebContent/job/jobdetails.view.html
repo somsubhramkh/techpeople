@@ -1,0 +1,17 @@
+<div class="container">
+
+	<div class="form-group">
+		Job ID :<label>{{selectedJob.jobId}}</label> <br> 
+		Job Title: <label>{{selectedJob.title}}</label>
+		Posted Date :<label>{{selectedJob.dateTime}}</label> <br> <br>
+		Job Description :<label>{{selectedJob.description}}</label><br><br>
+		Qualification :<label>{{selectedJob.qualification}}</label>
+		
+		<button type="button"  ng-click="vm.applyForJob(selectedJob.jobId)" 
+			       class="btn btn-warning btn-sm">Apply for job</button>
+		
+
+
+	</div>
+
+</div>
