@@ -2,6 +2,8 @@ package com.niit.angularauth.rest.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +14,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.angularauth.backend.dao.JobDAO;
+import com.niit.angularauth.backend.dao.UserDAO;
 import com.niit.angularauth.backend.model.Blog;
 import com.niit.angularauth.backend.model.Job;
+import com.niit.angularauth.backend.model.JobApplication;
 
 @RestController
 public class JobRestController {
 
 	@Autowired
 	JobDAO jobDAO;
+	
+	@Autowired
+	UserDAO userDAO;
 	
 	@GetMapping(value="/job/")
 	public ResponseEntity<List<Job>> getAllJobs(){
@@ -57,8 +64,20 @@ public class JobRestController {
     }
 	
 	
-	
-	
+	//-------------------Apply for Job--------------------------------------------------------
+	@PostMapping(value="/applyForJob/{jobId}")
+	public ResponseEntity<Job> applyForJob(@PathVariable("jobId") long jobId,HttpSession session)
+	{
+		
+		long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
+		JobApplication jobApplication=new JobApplication();
+		jobApplication.setJob(jobDAO.getJobById(jobId));
+		jobApplication.setStatus("New");
+		jobApplication.setDateApplied(new java.util.Date());
+		jobApplication.setUser(userDAO.getUserByUserId(loggedInUserId));
+		
+		return new ResponseEntity<Job>(HttpStatus.CREATED);
+	}
 	
 	
 }

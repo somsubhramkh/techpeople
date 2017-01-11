@@ -15,6 +15,7 @@
         vm.reset=reset;
         vm.getAllJobs=getAllJobs;
         vm.getJobDetails=getJobDetails;
+        vm.applyForJob=applyForJob;
         
         console.log('username in JobController:'+$rootScope.currentUser);
         
@@ -45,6 +46,36 @@
 								console.error('Error while fetching job details');
 							});
 		}
+        
+        function applyForJob(jobID) {
+			console.log("applyForJob");
+			var currentUser = $rootScope.currentUser;
+			console.log("currentUser.userId:" + currentUser.userId)
+			
+			if (typeof currentUser.userId == 'undefined') 
+				{
+				   alert("Please Login to apply for the job");
+                     console.log("User is not logged in.  Can't apply for job")
+                     $location
+						.path('/login');
+				
+				}
+			console.log("->userID :" + currentUser.userId+ "  applying for job:" + jobID)
+					
+					
+			JobService.applyForJob(jobID)
+					.then(
+							function(d) {
+								vm.job = d;
+								alert("You have successfully applied for job. HR will getback to you soon.")
+							},
+							function(errResponse) {
+								console
+										.error('Error while applying for job request');
+							});
+
+		}
+
         
         function postAJob(job){
         	

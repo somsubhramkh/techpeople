@@ -2,6 +2,8 @@ package com.niit.angularauth.rest.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -121,15 +123,18 @@ public class UserRestController {
 	  //-------------------Authenticate a User--------------------------------------------------------
 	    
 	  	@PostMapping(value = "/user/authenticate")
-	      public ResponseEntity<User> authenticate(@RequestBody User user) {
+	      public ResponseEntity<User> authenticate(@RequestBody User user,HttpSession session) {
 	          
 	    
 	          if (userDAO.authenticate(user.getUsername(),user.getPassword())) {
 	        	  User u=userDAO.getUserByUsername(user.getUsername());
+	        	  session.setAttribute("loggedInUser", u);
+	        	  session.setAttribute("loggedInUserId", u.getUserId());
 	              return new ResponseEntity<User>(u,HttpStatus.OK);
 	          }
 	    
-	       
+	          
+	          
 	    
 	         
 	          return new ResponseEntity<User>(HttpStatus.NOT_FOUND);

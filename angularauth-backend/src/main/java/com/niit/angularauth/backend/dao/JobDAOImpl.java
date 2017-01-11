@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.angularauth.backend.model.Job;
+import com.niit.angularauth.backend.model.JobApplication;
 
 
 @Repository("jobDAO")
@@ -43,6 +44,12 @@ public class JobDAOImpl implements JobDAO{
 		Session session=sessionFactory.getCurrentSession();
 		List<Job> jobs=session.createQuery("from Job").getResultList();
 		return jobs;
+	}
+
+	public void saveJobApplication(JobApplication jobApplication) {
+		Session session=sessionFactory.getCurrentSession();
+		session.saveOrUpdate(jobApplication);
+		
 	}
 	
 	

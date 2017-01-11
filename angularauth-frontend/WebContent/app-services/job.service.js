@@ -14,6 +14,7 @@
     	service.postAJob=postAJob;
     	service.getAllJobs=getAllJobs;
     	service.getJobDetails=getJobDetails;
+    	service.applyForJob=applyForJob;
         
         return service;
         
@@ -47,6 +48,19 @@
                             }, 
                             function(errResponse){
                                 console.error('Error while getting job details');
+                                return $q.reject(errResponse);
+                            }
+                    );
+    }
+        
+        function applyForJob(jobID) {
+            return $http.post(BASE_URL+"/applyForJob/"+jobID)
+                    .then(
+                            function(response){
+                                return response.data;
+                            }, 
+                            function(errResponse){
+                                console.error('Error while applying for job');
                                 return $q.reject(errResponse);
                             }
                     );
