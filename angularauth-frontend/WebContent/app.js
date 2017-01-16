@@ -63,6 +63,12 @@ console.log('inside app.js')
 		    	controller : 'JobController',
 		    	controllerAs: 'vm'
 		    })
+		    
+		    .when('/chat', {
+		    	templateUrl : 'chat/chat.view.html',
+		    	controller : 'ChatController',
+		    	
+	})
 
             .otherwise({ redirectTo: '/login' });
     }
