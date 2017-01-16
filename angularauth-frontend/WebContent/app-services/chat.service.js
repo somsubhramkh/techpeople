@@ -1,5 +1,6 @@
-angular.module('app').service("ChatService", function($q, $timeout) {
+angular.module('app').service("ChatService", function($q, $timeout,$rootScope) {
     
+	var user=$rootScope.currentUser;
     var service = {}, listener = $q.defer(), socket = {
       client: null,
       stomp: null
@@ -22,6 +23,7 @@ angular.module('app').service("ChatService", function($q, $timeout) {
         priority: 9
       }, JSON.stringify({
         message: message,
+        username:user.username,
         id: id
       }));
       messageIds.push(id);
@@ -38,6 +40,7 @@ angular.module('app').service("ChatService", function($q, $timeout) {
     	console.log("getMessage")
       var message = JSON.parse(data), out = {};
       out.message = message.message;
+      out.username= message.username;
       out.time = new Date(message.time);
     /*  if (_.contains(messageIds, message.id)) {*/
     	/*  if (_.includes (messageIds, message.id)) {
