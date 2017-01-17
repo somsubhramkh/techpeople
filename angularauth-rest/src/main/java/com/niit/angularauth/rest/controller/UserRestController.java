@@ -36,6 +36,18 @@ public class UserRestController {
 	        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	    }
 		
+		//-------------------Retrieve All Users except the current user--------------------------------------------------------
+	    
+			@GetMapping(value="/user/friend/")
+		    public ResponseEntity<List<User>> listAllUsersExceptCurrentUser(HttpSession session) {
+				long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
+		        List<User> users = userDAO.listUsers(loggedInUserId);
+		        if(users.isEmpty()){
+		            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+		        }
+		        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+		    }
+		
 		 //-------------------Retrieve Single User--------------------------------------------------------
 	    
 		@GetMapping(value="/user/id/{id}",produces=MediaType.APPLICATION_JSON_VALUE)
@@ -130,6 +142,7 @@ public class UserRestController {
 	        	  User u=userDAO.getUserByUsername(user.getUsername());
 	        	  session.setAttribute("loggedInUser", u);
 	        	  session.setAttribute("loggedInUserId", u.getUserId());
+	        	  System.out.println("Logged in User ID:"+session.getAttribute("loggedInUserId").toString());
 	              return new ResponseEntity<User>(u,HttpStatus.OK);
 	          }
 	    

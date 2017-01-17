@@ -15,11 +15,16 @@
         service.Create = Create;
         service.Update = Update;
         service.Delete = Delete;
+        service.GetAllExceptCurrent=GetAllExceptCurrent;
 
         return service;
 
         function GetAll() {
             return $http.get('http://localhost:10080/angularauth-rest/user/').then(handleSuccess, handleError('Error getting all users'));
+        }
+        
+        function GetAllExceptCurrent() {
+            return $http.get('http://localhost:10080/angularauth-rest/user/friend/').then(handleSuccess, handleError('Error getting all users'));
         }
 
         function GetById(id) {

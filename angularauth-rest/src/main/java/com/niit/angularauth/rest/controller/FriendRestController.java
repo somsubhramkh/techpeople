@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.angularauth.backend.dao.FriendDAO;
@@ -24,18 +25,18 @@ public class FriendRestController {
 	@Autowired
 	UserDAO userDAO;
 	
-	@Autowired
-	HttpSession session;
+	/*@Autowired
+	HttpSession session;*/
 	
 	
 	
 	
 	@GetMapping(value = "/addFriend/{friendID}")
-	public ResponseEntity<Friend> sendFriendRequest(@PathVariable("friendID") long friendID ) {
+	public ResponseEntity<Friend> sendFriendRequest(@PathVariable("friendID") long friendID,HttpSession session) {
 		
-		//long loggedInUserID = (Long) session.getAttribute("loggedInUserID");
+		long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
 		Friend friend=new Friend();
-		friend.setUser(userDAO.getUserByUserId(21));
+		friend.setUser(userDAO.getUserByUserId(loggedInUserId));
 		friend.setFriend(userDAO.getUserByUserId(friendID));
 		friend.setStatus("New");
 		friend.setOnline(false);
@@ -46,12 +47,12 @@ public class FriendRestController {
 	}
 	
 	@GetMapping(value = "/myFriends")
-	public ResponseEntity<List<Friend>> getMyFriends( ) {
+	public ResponseEntity<List<Friend>> getMyFriends(HttpSession session) {
 		
-		//long loggedInUserID = (Long) session.getAttribute("loggedInUserID");
+		long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
 
 		
-		List<Friend> myFriends = friendDAO.listMyFriends(21);
+		List<Friend> myFriends = friendDAO.listMyFriends(loggedInUserId);
 
 		if (myFriends.isEmpty()) {
 			return new ResponseEntity<List<Friend>>(HttpStatus.NO_CONTENT);
@@ -61,20 +62,23 @@ public class FriendRestController {
 	}
 	
 	@GetMapping(value = "/acceptFriend/{friendId}")
-	public ResponseEntity<Friend> acceptFriendFriendRequest(@PathVariable("friendId") long friendId) {
-		//long loggedInUserID = (Long) session.getAttribute("loggedInUserID");
-		Friend friend=friendDAO.getFriend(21, friendId);
+	public ResponseEntity<Friend> acceptFriendFriendRequest(@PathVariable("friendId") long friendId,HttpSession session) {
+		long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
+		Friend friend=friendDAO.getFriend(loggedInUserId, friendId);
+		Friend friend2=friendDAO.getFriend(friendId,loggedInUserId);
 		friend.setStatus("Accepted");
+		friend2.setStatus("Accepted");
 		friendDAO.updateFriend(friend);
+		friendDAO.updateFriend(friend2);
 
 		return new ResponseEntity<Friend>(friend, HttpStatus.OK);
 
 	}
 	
 	@GetMapping(value = "/rejectFriend/{friendId}")
-	public ResponseEntity<Friend> rejectFriendFriendRequest(@PathVariable("friendId") long friendId) {
-		//long loggedInUserID = (Long) session.getAttribute("loggedInUserID");
-		Friend friend=friendDAO.getFriend(21, friendId);
+	public ResponseEntity<Friend> rejectFriendFriendRequest(@PathVariable("friendId") long friendId,HttpSession session) {
+		long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
+		Friend friend=friendDAO.getFriend(loggedInUserId, friendId);
 		friend.setStatus("Rejected");
 		friendDAO.updateFriend(friend);
 
@@ -83,10 +87,10 @@ public class FriendRestController {
 	}
 	
 	@GetMapping(value = "/getMyFriendRequests/")
-	public ResponseEntity<List<Friend>> getMyFriendRequests() {
+	public ResponseEntity<List<Friend>> getMyFriendRequests(HttpSession session) {
 		
-		//Long loggedInUserID = (Long) session.getAttribute("loggedInUserID");
-		List<Friend> myFriendRequests = friendDAO.listNewFriendRequests(21);
+		long loggedInUserId = (Long)session.getAttribute("loggedInUserId");
+		List<Friend> myFriendRequests = friendDAO.listNewFriendRequests(loggedInUserId);
 		return new ResponseEntity<List<Friend>>(myFriendRequests, HttpStatus.OK);
 
 	}

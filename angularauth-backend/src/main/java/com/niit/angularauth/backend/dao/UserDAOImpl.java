@@ -90,6 +90,13 @@ public class UserDAOImpl implements UserDAO{
 		
 		return false;
 	}
+
+	public List<User> listUsers(long userId) {
+		Session session=sessionFactory.getCurrentSession();
+		List<User> users=session.createQuery("from User where userId<>"+userId).getResultList();
+		
+		return users;
+	}
 	
 	
 

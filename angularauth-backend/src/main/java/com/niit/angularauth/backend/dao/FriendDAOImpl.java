@@ -25,7 +25,13 @@ public class FriendDAOImpl implements FriendDAO{
 	
 	public void addFriend(Friend friend) {
 		Session session=sessionFactory.getCurrentSession();
+		Friend friend2=new Friend();
+		friend2.setUser(friend.getFriend());
+		friend2.setFriend(friend.getUser());
+		friend2.setOnline(false);
+		friend2.setStatus("New");
 		session.saveOrUpdate(friend);
+		session.saveOrUpdate(friend2);
 		
 	}
 
@@ -47,21 +53,21 @@ public class FriendDAOImpl implements FriendDAO{
 		
 		User user=userDAO.getUserByUserId(userId);
 		User friendUser=userDAO.getUserByUserId(friendId);
-		Friend friend=(Friend)session.createQuery("from Friend where userId="+user.getUserId()+" and friendId="+friendUser.getUserId()).getSingleResult();
+		Friend friend=(Friend)session.createQuery("from Friend where userId="+friendUser.getUserId()+" and friendId="+user.getUserId()).getSingleResult();
 		return friend;
 	}
 
 	public List<Friend> listMyFriends(long userId) {
 		Session session=sessionFactory.getCurrentSession();
 		User user=userDAO.getUserByUserId(userId);
-		List<Friend> friends=session.createQuery("from Friend where userId="+userId).getResultList();
+		List<Friend> friends=session.createQuery("from Friend where userId="+userId+" and status='Accepted'").getResultList();
 		return friends;
 	}
 
 	public List<Friend> listNewFriendRequests(long userId) {
 		Session session=sessionFactory.getCurrentSession();
 		User user=userDAO.getUserByUserId(userId);
-		List<Friend> friends=session.createQuery("from Friend where userId="+userId+" and status='New'").getResultList();
+		List<Friend> friends=session.createQuery("from Friend where friendId="+userId+" and status='New'").getResultList();
 		return friends;
 	}
 

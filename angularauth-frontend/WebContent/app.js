@@ -68,7 +68,25 @@ console.log('inside app.js')
 		    	templateUrl : 'chat/chat.view.html',
 		    	controller : 'ChatController',
 		    	
-	})
+		    })
+		    
+		    .when('/searchfriend', {
+		    	templateUrl : 'friend/searchfriend.view.html',
+		    	controller : 'FriendController',
+		    	controllerAs:'vm'
+		    })
+
+		    .when('/viewfriend', {
+		    	templateUrl : 'friend/viewfriend.view.html',
+		    	controller : 'FriendController',
+		    	controllerAs:'vm'
+		    })
+		    
+		    .when('/friendrequest', {
+		    	templateUrl : 'friend/friendrequest.view.html',
+		    	controller : 'FriendController',
+		    	controllerAs:'vm'
+		    })
 
             .otherwise({ redirectTo: '/login' });
     }
