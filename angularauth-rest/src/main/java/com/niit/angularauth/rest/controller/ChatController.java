@@ -21,9 +21,10 @@ public class ChatController {
 	  public void sendMessage(PrivateMessage privateMessage) {
 		  System.out.println("Calling the method sendMessage");
 		  System.out.println(" Message : "+privateMessage.getMessage());
+		  System.out.println(" User Name : "+privateMessage.getUsername());
+		  System.out.println(" Friend Name : "+privateMessage.getFriendName());
 		  
-		  System.out.println(" Friend ID : "+privateMessage.getFriendName());
-		  
+		  simpMessagingTemplate.convertAndSend("/queue/message/"+privateMessage.getUsername(), privateMessage);
 		  simpMessagingTemplate.convertAndSend("/queue/message/"+privateMessage.getFriendName(), privateMessage);
 		  //simpMessagingTemplate.convertAndSend("/queue/message/"+privateMessage.getUsername(), privateMessage);	
 	   
