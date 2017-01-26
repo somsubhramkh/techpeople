@@ -1,5 +1,7 @@
 package com.niit.angularauth.rest.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -19,6 +21,7 @@ public class ChatController {
 	  @MessageMapping("/chat")
 	  //@SendTo("/queue/message/{friendID}")
 	  public void sendMessage(PrivateMessage privateMessage) {
+		  privateMessage.setTime(new Date());
 		  System.out.println("Calling the method sendMessage");
 		  System.out.println(" Message : "+privateMessage.getMessage());
 		  System.out.println(" User Name : "+privateMessage.getUsername());

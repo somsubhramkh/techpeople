@@ -5,9 +5,11 @@ import java.util.Date;
 public class PrivateMessage extends Message{
 	
 	private String friendName;
+	private Date time;
 	
-	public PrivateMessage(Message original, String friendName) {
+	public PrivateMessage(Message original, String friendName,Date time) {
         super(original.getId(), original.getMessage(),original.getUsername());
+        this.time=time;
         this.friendName = friendName;
     }
 
@@ -21,6 +23,14 @@ public class PrivateMessage extends Message{
 
 	public void setFriendName(String friendName) {
 		this.friendName = friendName;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
     
 	
