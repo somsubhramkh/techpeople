@@ -22,6 +22,7 @@
     	vm.fetchAllUsers=fetchAllUsers;
     	vm.acceptFriendRequest=acceptFriendRequest;
     	vm.rejectFriendRequest=rejectFriendRequest;
+    	vm.startPrivateChat=startPrivateChat;
     	
     	fetchAllUsers();
     	getMyFriends();
@@ -144,6 +145,19 @@
 				console.error('Error while fetching Users');
 			});
 		}
+    	
+    	function startPrivateChat(friendName)
+        {
+
+      	  console.log("->start private chat :"+friendName)
+ 
+          $rootScope.friendName = friendName;
+          alert("Private Chat Started");
+          $location.path("/privatechat");
+                             
+        
+       	 
+        }
     	
     }
 

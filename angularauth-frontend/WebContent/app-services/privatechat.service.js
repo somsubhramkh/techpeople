@@ -1,15 +1,16 @@
-angular.module('app').service("ChatService", function($q, $timeout,$rootScope) {
+angular.module('app').service("PrivateChatService", function($q, $timeout,$rootScope) {
     
 	var user=$rootScope.currentUser;
+	var friendName=$rootScope.friendName;
     var service = {}, listener = $q.defer(), socket = {
       client: null,
       stomp: null
     }, messageIds = [];
     
     service.RECONNECT_TIMEOUT = 30000;
-    service.SOCKET_URL = "/angularauth-rest/chat_forum";
-    service.CHAT_TOPIC = "/topic/message";
-    service.CHAT_BROKER = "/app/chat_forum";
+    service.SOCKET_URL = "/angularauth-rest/chat";
+    service.CHAT_TOPIC = "/queue/message/"+user.username;
+    service.CHAT_BROKER = "/app/chat";
     
     service.receive = function() {
     	console.log("receive")
@@ -24,6 +25,7 @@ angular.module('app').service("ChatService", function($q, $timeout,$rootScope) {
       }, JSON.stringify({
         message: message,
         username:user.username,
+        friendName:friendName,
         id: id
       }));
       messageIds.push(id);
@@ -42,11 +44,7 @@ angular.module('app').service("ChatService", function($q, $timeout,$rootScope) {
       out.message = message.message;
       out.username= message.username;
       out.time = new Date(message.time);
-    /*  if (_.contains(messageIds, message.id)) {*/
-    	/*  if (_.includes (messageIds, message.id)) {
-        out.self = true;
-        messageIds = _.remove(messageIds, message.id);
-      }*/
+    
       return out;
     };
     

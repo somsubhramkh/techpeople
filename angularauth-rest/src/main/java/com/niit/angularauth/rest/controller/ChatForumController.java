@@ -18,7 +18,7 @@ public class ChatForumController {
 	
     
 	
-	  @MessageMapping("/chat") 
+	  @MessageMapping("/chat_forum") 
 	  @SendTo("/topic/message")        
 	  public OutputMessage sendMessage(Message message) {
 		 

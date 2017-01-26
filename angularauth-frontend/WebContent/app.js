@@ -70,6 +70,12 @@ console.log('inside app.js')
 		    	
 		    })
 		    
+		    .when('/privatechat', {
+		    	templateUrl : 'privatechat/privatechat.view.html',
+		    	controller : 'PrivateChatController',
+		    	
+		    })
+		    
 		    .when('/searchfriend', {
 		    	templateUrl : 'friend/searchfriend.view.html',
 		    	controller : 'FriendController',
