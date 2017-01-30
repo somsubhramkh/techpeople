@@ -28,13 +28,7 @@ angular.module('app').service("PrivateChatService", function($q, $timeout,$rootS
         friendName:friendName,
         id: id
       }));
-      /*var selfMessage=JSON.stringify({
-    	        message: message,
-    	        username:user.username,
-    	        friendName:friendName,
-    	        id: id
-    	      });
-      getMessage(selfMessage);*/
+      
       messageIds.push(id);
     };
     

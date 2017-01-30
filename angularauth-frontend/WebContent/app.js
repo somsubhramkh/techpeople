@@ -109,13 +109,26 @@ console.log('inside app.js')
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login', '/register','/viewblog','/listblog','/chat']) === -1;
+            var adminPage = $.inArray($location.path(), ['/postjob']) == 0;
             console.log('Restricted Page:'+restrictedPage);
             
             var loggedIn = $rootScope.currentUser.username;
+            var role=$rootScope.currentUser.role;
             console.log('logged In:'+loggedIn);
+            console.log('role:'+role);
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }
+            else
+            {
+            	
+            	if (adminPage && role!='admin') {
+                    alert('This action is restricted to the admin role only');
+                    $location.path("/");
+                }
+            }
+            
+            
         });
     }
 
