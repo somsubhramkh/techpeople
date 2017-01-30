@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niit.angularauth.backend.dao.FriendDAO;
 import com.niit.angularauth.backend.dao.UserDAO;
 import com.niit.angularauth.backend.model.User;
 
@@ -24,6 +25,9 @@ public class UserRestController {
 	
 	@Autowired
 	UserDAO userDAO;
+	
+	@Autowired
+	FriendDAO friendDAO;
 	
 	//-------------------Retrieve All Users--------------------------------------------------------
     
@@ -139,6 +143,7 @@ public class UserRestController {
 	          
 	    
 	          if (userDAO.authenticate(user.getUsername(),user.getPassword())) {
+	        	  friendDAO.setOnline((userDAO.getUserByUsername(user.getUsername()).getUserId()));
 	        	  User u=userDAO.getUserByUsername(user.getUsername());
 	        	  session.setAttribute("loggedInUser", u);
 	        	  session.setAttribute("loggedInUserId", u.getUserId());
@@ -153,4 +158,17 @@ public class UserRestController {
 	          return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	      }
 		
+//-------------------Authenticate a User--------------------------------------------------------
+	    
+	  	@PutMapping(value = "/user/logout")
+	      public ResponseEntity<User> logout(HttpSession session) {
+	          
+	  		Long userId=(Long)session.getAttribute("loggedInUserId");
+	  		
+	  		friendDAO.setOffline(userId);
+	  		session.invalidate();
+	    
+	      
+	        return new ResponseEntity<User>(HttpStatus.OK);
+	      }
 }

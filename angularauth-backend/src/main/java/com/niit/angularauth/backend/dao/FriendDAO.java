@@ -12,7 +12,7 @@ public interface FriendDAO {
 	public Friend getFriend(long userId, long friendId);
 	public List<Friend> listMyFriends(long userId);
 	public List<Friend> listNewFriendRequests(long userId);
-	public void setOnline(String userId);
-	public void setOffline(String userId);
+	public void setOnline(long userId);
+	public void setOffline(long userId);
 
 }

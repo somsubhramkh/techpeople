@@ -16,6 +16,7 @@
         service.Update = Update;
         service.Delete = Delete;
         service.GetAllExceptCurrent=GetAllExceptCurrent;
+        service.Logout=Logout;
 
         return service;
 
@@ -45,6 +46,10 @@
 
         function Delete(id) {
             return $http.delete('http://localhost:10080/angularauth-rest/user/' + id).then(handleSuccess, handleError('Error deleting user'));
+        }
+        
+        function Logout(id) {
+            return $http.put('http://localhost:10080/angularauth-rest/user/logout').then(handleSuccess, handleError('Error Logging out'));
         }
 
         // private functions
