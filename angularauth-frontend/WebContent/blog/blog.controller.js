@@ -125,12 +125,18 @@
         console.log('username in BlogController:'+$rootScope.currentUser.username);
         vm.blog = null;
         vm.allBlogs = [];
+        vm.allNewBlogs=[];
         
         vm.fetchAllBlogs = fetchAllBlogs;
         vm.getBlog = getBlog;
+        vm.approveBlog=approveBlog;
+        vm.deleteBlog=deleteBlog;
+        vm.rejectBlog=rejectBlog;
+        
         vm.submit=submit;
         vm.reset=reset;
         fetchAllBlogs();
+        fetchAllNewBlogs();
         
         function fetchAllBlogs(){
             BlogService.fetchAllBlogs()
@@ -139,6 +145,20 @@
                             	 console.log('inside fetch function')
                                   vm.allBlogs = d;
                                   console.log(vm.allBlogs)
+                             },
+                              function(errResponse){
+                                  console.error('Error while fetching Blogs');
+                              }
+                     );
+        };
+        
+        function fetchAllNewBlogs(){
+            BlogService.fetchAllNewBlogs()
+                .then(
+                             function(d) {
+                            	 console.log('inside fetch function')
+                                  vm.allNewBlogs = d;
+                                  console.log(vm.allNewBlogs)
                              },
                               function(errResponse){
                                   console.error('Error while fetching Blogs');
@@ -191,6 +211,38 @@
      	   vm.blog={};
             $scope.myForm.$setPristine(); //reset Form
        };
-    }
+    
+    
+    function approveBlog(blogId){
+    	console.log('controller-->approveBlog called');
+        BlogService.approveBlog(blogId)
+                .then(
+                		fetchAllNewBlogs, 
+                        function(errResponse){
+                             console.error('Error while creating Blog.');
+                        } 
+            );
+    };
+    
+    function rejectBlog(blogId){
+    	console.log('controller-->rejectBlog called');
+        BlogService.rejectBlog(blogId)
+                .then(
+                		fetchAllNewBlogs, 
+                        function(errResponse){
+                             console.error('Error while creating Blog.');
+                        } 
+            );
+    };
 
+    function deleteBlog(blogId){
+        BlogService.deleteBlog(blogId)
+                .then(
+                console.error('blog deleted'), 
+                        function(errResponse){
+                             console.error('Error while creating Blog.');
+                        } 
+            );
+    };
+    }
 })();

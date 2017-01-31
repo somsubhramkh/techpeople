@@ -35,6 +35,18 @@ public class BlogRestController {
 		        }
 		        return new ResponseEntity<List<Blog>>(blogs, HttpStatus.OK);
 		    }
+			
+			//-------------------Retrieve All New Blogs--------------------------------------------------------
+		    
+			@GetMapping(value="/blog/new")
+		    public ResponseEntity<List<Blog>> listAllNewBlogs() {
+		        List<Blog> blogs = blogDAO.listNewBlogs();
+		        if(blogs.isEmpty()){
+		            return new ResponseEntity<List<Blog>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+		        }
+		        return new ResponseEntity<List<Blog>>(blogs, HttpStatus.OK);
+		    }
+	
 	
 			
 			//-------------------Retrieve Single Blog--------------------------------------------------------
@@ -86,7 +98,7 @@ public class BlogRestController {
 		    }
 		  
 			
-			//------------------- Delete a User --------------------------------------------------------
+			//------------------- Delete a blog --------------------------------------------------------
 		    @DeleteMapping(value = "/blog/{id}")
 		    public ResponseEntity<Blog> deleteBlog(@PathVariable("id") long id) {
 		        		  
@@ -101,4 +113,35 @@ public class BlogRestController {
 		    }
 		    
 	
+//-------------------Approve Blog--------------------------------------------------------
+		    
+			@GetMapping(value="/approveblog/{id}",produces=MediaType.APPLICATION_JSON_VALUE)
+		    public ResponseEntity<Blog> approveBlog(@PathVariable("id") long id) {
+		        
+		        Blog blog = blogDAO.getBlogByBlogId(id);
+		        
+		        if (blog == null) {
+		            
+		            return new ResponseEntity<Blog>(HttpStatus.NOT_FOUND);
+		        }
+		        blog.setStatus("Approved");
+		        blogDAO.updateBlog(blog);
+		        return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		    }
+			
+//-------------------Reject Blog--------------------------------------------------------
+		    
+			@GetMapping(value="/rejectblog/{id}",produces=MediaType.APPLICATION_JSON_VALUE)
+		    public ResponseEntity<Blog> rejectBlog(@PathVariable("id") long id) {
+		        
+		        Blog blog = blogDAO.getBlogByBlogId(id);
+		        
+		        if (blog == null) {
+		            
+		            return new ResponseEntity<Blog>(HttpStatus.NOT_FOUND);
+		        }
+		        blog.setStatus("Rejected");
+		        blogDAO.updateBlog(blog);
+		        return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		    }
 }

@@ -20,6 +20,7 @@ public class Blog {
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userId")
 	private User user;
+	private String status;
 	
 	
 	public long getBlogId() {
@@ -45,6 +46,12 @@ public class Blog {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

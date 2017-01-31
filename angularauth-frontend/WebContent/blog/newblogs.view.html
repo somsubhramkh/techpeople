@@ -1,0 +1,15 @@
+<div  class="container">
+
+
+Welcome to Blogs
+
+
+<div ng-repeat="blog in vm.allNewBlogs">
+ <p> Title  {{blog.title}} -  Written By:  {{blog.user.username}}</p>
+ <p>Description: {{blog.description}}  <br/>
+<button class="btn btn-success" ng-click="vm.approveBlog(blog.blogId)">Approve Blog</button>
+<button class="btn btn-danger" ng-click="vm.rejectBlog(blog.blogId)">Reject Blog</button>
+</div>
+
+
+</div>

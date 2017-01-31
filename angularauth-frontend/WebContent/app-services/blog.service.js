@@ -17,13 +17,29 @@
         service.updateBlog = updateBlog;
         service.deleteBlog = deleteBlog;
         service.getBlog = getBlog;
+        service.fetchAllNewBlogs=fetchAllNewBlogs;
+        service.approveBlog=approveBlog;
+        service.rejectBlog=rejectBlog;
         
-
         return service;
 
         
         function fetchAllBlogs() {
             return $http.get(BASE_URL+'/blog/')
+                    .then(
+                            function(response){
+                            	
+                                return response.data;
+                            }, 
+                            function(errResponse){
+                                console.error('Error while fetching Blogs');
+                                return $q.reject(errResponse);
+                            }
+                    );
+    }
+        
+        function fetchAllNewBlogs() {
+            return $http.get(BASE_URL+'/blog/new')
                     .then(
                             function(response){
                             	
@@ -49,6 +65,44 @@
                     );
     }
         
+        function approveBlog(blogId){
+            return $http.get(BASE_URL+'/approveblog/'+blogId)
+                    .then(
+                            function(response){
+                                return response.data;
+                            }, 
+                            function(errResponse){
+                                console.error('Error while creating blog');
+                                return $q.reject(errResponse);
+                            }
+                    );
+    }
+        
+        function rejectBlog(blogId){
+            return $http.get(BASE_URL+'/rejectblog/'+blogId)
+                    .then(
+                            function(response){
+                                return response.data;
+                            }, 
+                            function(errResponse){
+                                console.error('Error while creating blog');
+                                return $q.reject(errResponse);
+                            }
+                    );
+    }
+        
+        function deleteBlog(blogId){
+            return $http.delete(BASE_URL+'/blog/'+blogId)
+                    .then(
+                            function(response){
+                                return response.data;
+                            }, 
+                            function(errResponse){
+                                console.error('Error while creating blog');
+                                return $q.reject(errResponse);
+                            }
+                    );
+    }
         
         function updateBlog(blog, id){
             return $http.put(BASE_URL+'/blog/'+id, blog)
@@ -64,7 +118,7 @@
     }
         
         
-        function deleteBlog(id){
+        /*function deleteBlog(id){
             return $http.delete(BASE_URL+'/blog/'+id)
                     .then(
                             function(response){
@@ -75,7 +129,7 @@
                                 return $q.reject(errResponse);
                             }
                     );
-    }
+    }*/
         
         
         function getBlog(id){

@@ -46,6 +46,12 @@ console.log('inside app.js')
 		    	controllerAs: 'vm'
 		    })
 		    
+		    .when('/newblog', {
+		    	templateUrl : 'blog/newblogs.view.html',
+		    	controller : 'BlogController',
+		    	controllerAs: 'vm'
+		    })
+		    
 		    .when('/postjob', {
 		    	templateUrl : 'job/postjob.view.html',
 		    	controller : 'JobController',
@@ -109,7 +115,7 @@ console.log('inside app.js')
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login', '/register','/viewblog','/listblog','/chat']) === -1;
-            var adminPage = $.inArray($location.path(), ['/postjob']) == 0;
+            var adminPage = $.inArray($location.path(), ['/postjob','/newblog']) != -1;
             console.log('Restricted Page:'+restrictedPage);
             
             var loggedIn = $rootScope.currentUser.username;
